@@ -5,7 +5,8 @@ const usernameInput = document.getElementById("input-search");
 const btnSearch = document.getElementById("btn-search");
 const profileResults = document.querySelector(".profile-results");
 
-btnSearch.addEventListener("click", async () => {
+
+async function getUserProfile() {
     const username = usernameInput.value;
 
     if (!username) {
@@ -16,7 +17,7 @@ btnSearch.addEventListener("click", async () => {
 
     profileResults.innerHTML = "<p class='loading'>Carregando...</p>";
     try {
-        
+
 
         const userData = await fetchGitHubUser(username);
         const userRepos = await fetchGitHubUserRepos(username);
@@ -29,6 +30,14 @@ btnSearch.addEventListener("click", async () => {
     }
 
 
+};
+
+btnSearch.addEventListener("click", getUserProfile);
+
+usernameInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        getUserProfile();
+    }
 });
 
 
